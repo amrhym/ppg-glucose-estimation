@@ -12,7 +12,7 @@ Non-invasive blood glucose estimation from photoplethysmography (PPG) signals us
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ppg-glucose-estimation.git
+git clone https://github.com/amrhym/ppg-glucose-estimation.git
 cd ppg-glucose-estimation
 
 # Create virtual environment
@@ -299,9 +299,9 @@ If you use this code in your research, please cite:
 ```bibtex
 @software{ppg_glucose_2024,
   title = {PPG Glucose Estimation: Non-invasive Blood Glucose Monitoring},
-  author = {Your Name},
+  author = {Amr Hym},
   year = {2024},
-  url = {https://github.com/yourusername/ppg-glucose-estimation}
+  url = {https://github.com/amrhym/ppg-glucose-estimation}
 }
 ```
 
@@ -312,5 +312,5 @@ This software is for research and educational purposes only. It is not intended 
 ## 🆘 Support
 
 - Documentation: [docs/](docs/)
-- Issues: [GitHub Issues](https://github.com/yourusername/ppg-glucose-estimation/issues)
-- Discussions: [GitHub Discussions](https://github.com/yourusername/ppg-glucose-estimation/discussions)
+- Issues: [GitHub Issues](https://github.com/amrhym/ppg-glucose-estimation/issues)
+- Discussions: [GitHub Discussions](https://github.com/amrhym/ppg-glucose-estimation/discussions)
