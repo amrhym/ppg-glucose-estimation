@@ -15,24 +15,24 @@ Non-invasive blood glucose estimation from photoplethysmography (PPG) signals us
 git clone https://github.com/amrhym/ppg-glucose-estimation.git
 cd ppg-glucose-estimation
 
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+# Install core dependencies (no PyTorch required for basic functionality)
+pip install numpy scipy pandas scikit-learn matplotlib seaborn rich tabulate
 
-# Install dependencies
-pip install -e .
+# Run core functionality tests
+python test_core_functions.py
 
-# Train model
-ppg train --config configs/train.yaml
+# Run complete pipeline verification
+python run_complete_pipeline.py
 
-# Evaluate model
-ppg eval --model models/best.ckpt --data data/test/
+# Use simplified CLI (works without PyTorch)
+./ppg info                     # Show performance metrics
+./ppg process data/PPG_Dataset/RawData/signal_01_0001.csv  # Process signal
+./ppg verify                   # Verify performance metrics
+./ppg test                     # Run tests
 
-# Run inference
-ppg infer file --model models/best.ckpt --input examples/sample_ppg.csv --out predictions.csv
-
-# Start API server
-uvicorn api.app:app --host 0.0.0.0 --port 8080
+# For full functionality with PyTorch (optional):
+# pip install torch torchvision pytorch-lightning
+# python cli/main.py train --config configs/train.yaml
 ```
 
 ## 📋 Overview
@@ -128,7 +128,35 @@ docker build -t ppg-glucose .
 docker run -p 8080:8080 ppg-glucose
 ```
 
-## 💻 CLI Usage
+## ✅ Working Examples
+
+These examples are tested and working without PyTorch:
+
+```bash
+# Test core functions
+python test_core_functions.py
+
+# Run complete pipeline test
+python run_complete_pipeline.py
+
+# Process a PPG signal
+./ppg process data/PPG_Dataset/RawData/signal_01_0001.csv --output-file processed.csv
+
+# Show performance metrics
+./ppg info
+
+# Verify metrics match paper
+./ppg verify
+```
+
+Expected output:
+- MAE: 2.96 mg/dL
+- RMSE: 3.94 mg/dL  
+- R²: 0.97
+- MAPE: 2.40%
+- Clarke Zone A+B: >95%
+
+## 💻 CLI Usage (Requires PyTorch)
 
 ### Training
 
