@@ -1,0 +1,70 @@
+# Training configuration for PPG glucose estimation
+
+# Data parameters
+data:
+  data_dir: "data/"
+  batch_size: 64
+  num_workers: 4
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  patient_wise_split: true
+
+# Preprocessing parameters
+preprocessing:
+  raw_fs: 1000.0
+  target_fs: 30.0
+  bandpass: [0.5, 8.0]
+  filter_order: 4
+  zero_phase: true
+  window_length_s: 10.0
+  hop_length_s: 5.0
+  normalization: "zscore"
+  augment_training: true
+  gaussian_noise_std: [0.0, 0.01, 0.02]
+  amplitude_scale: [0.9, 1.1]
+
+# Model parameters
+model:
+  input_length: 300  # 10s at 30Hz
+  cnn_small_kernels: [3, 5]
+  cnn_small_channels: [64, 128]
+  cnn_large_kernels: [11, 15]
+  cnn_large_channels: [64, 128]
+  gru_layers: 2
+  gru_hidden: 128
+  gru_bidirectional: true
+  dense_dims: [256, 128, 64]
+  dropout: 0.5
+  l2_weight: 0.01
+
+# Training parameters
+training:
+  epochs: 200
+  learning_rate: 0.001
+  optimizer: "adamw"
+  weight_decay: 0.01
+  scheduler: "cosine"
+  min_lr: 0.00001
+  early_stopping_patience: 20
+  loss_fn: "mae"
+  kfold: 10
+
+# Quality validation
+quality:
+  min_quality: 0.5
+  min_snr_db: -5.0
+  min_hr_bpm: 40.0
+  max_hr_bpm: 180.0
+  max_motion_score: 0.5
+
+# Logging
+logging:
+  tensorboard: true
+  wandb: false
+  log_interval: 10
+  save_checkpoints: true
+  checkpoint_dir: "models/"
+
+# Seed for reproducibility
+seed: 42

@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ppg-glucose:latest
+    container_name: ppg-glucose-api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./models:/app/models:ro
+      - ./configs:/app/configs:ro
+      - ./data:/app/data:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    networks:
+      - ppg-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  tensorboard:
+    image: tensorflow/tensorflow:latest
+    container_name: ppg-tensorboard
+    command: tensorboard --logdir=/logs --bind_all
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./logs:/logs:ro
+    networks:
+      - ppg-network
+
+  notebook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ppg-glucose:latest
+    container_name: ppg-notebook
+    command: jupyter notebook --ip=0.0.0.0 --no-browser --allow-root
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./examples:/app/examples
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    networks:
+      - ppg-network
+
+networks:
+  ppg-network:
+    driver: bridge
