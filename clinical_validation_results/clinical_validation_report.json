@@ -1,0 +1,99 @@
+{
+  "executive_summary": {
+    "deployment_ready": false,
+    "safety_score": 47.4074074074074,
+    "risk_level": "CRITICAL",
+    "zone_a_percentage": 96.39999999999999,
+    "clinical_accuracy": 99.99999999999999,
+    "total_predictions": 1000
+  },
+  "clinical_metrics": {
+    "clarke_zones": {
+      "A": 96.39999999999999,
+      "B": 3.5999999999999996,
+      "C": 0.0,
+      "D": 0.0,
+      "E": 0.0
+    },
+    "clinical_accuracy": 99.99999999999999,
+    "hypoglycemia_detection": {
+      "sensitivity": 0.874074074074074,
+      "specificity": 0.976878612716763,
+      "detection_rate": 87.4074074074074,
+      "false_positive_rate": 2.312138728323699
+    },
+    "hyperglycemia_detection": {
+      "sensitivity": 0.9333333333333332,
+      "specificity": 0.9954545454545455,
+      "detection_rate": 93.33333333333333,
+      "false_positive_rate": 0.45454545454545453
+    },
+    "error_metrics": {
+      "mae": 6.09763181393418,
+      "rmse": 7.663895650151978,
+      "mape": 5.827387308874616,
+      "bias": -1.8145480549356323,
+      "precision": 15.834526449087035
+    }
+  },
+  "safety_assessment": {
+    "deployment_ready": false,
+    "safety_score": 47.4074074074074,
+    "risk_level": "CRITICAL",
+    "critical_failures": [
+      "Hypoglycemia detection sensitivity (0.87) below safety requirement (0.90)",
+      "Missed 5 severe hypoglycemic events (<54.0 mg/dL)"
+    ],
+    "warnings": [],
+    "recommendations": [
+      "Enhance hypoglycemia detection algorithm with additional training data"
+    ],
+    "edge_case_analysis": {
+      "severe_hypoglycemia": {
+        "count": 29,
+        "mae": 4.0129635891596465,
+        "detection_rate": 82.75862068965517,
+        "max_error": 10.80499311466658
+      },
+      "severe_hyperglycemia": {
+        "count": 1,
+        "mae": 1.1991641714840284,
+        "detection_rate": 100.0,
+        "max_error": 1.1991641714840284
+      },
+      "rapid_changes": {
+        "count": "418",
+        "tracking_accuracy": 0.8442719771582291
+      },
+      "extreme_values": {
+        "extreme_low_count": "0",
+        "extreme_high_count": "0",
+        "range_coverage": "45.0 - 273.0 mg/dL"
+      }
+    }
+  },
+  "regulatory_compliance": {
+    "fda_zone_a_requirement": true,
+    "fda_clinical_accuracy_requirement": true,
+    "dangerous_zone_limit": true,
+    "hypoglycemia_sensitivity_requirement": "False",
+    "mape_requirement": "True"
+  },
+  "clinical_deployment_guidelines": {
+    "patient_monitoring_recommendations": [
+      "Implement continuous glucose monitoring validation",
+      "Establish alert thresholds for dangerous predictions",
+      "Require clinical oversight for extreme values",
+      "Implement automatic safety shutoffs for Zone D/E predictions"
+    ],
+    "limitations": [
+      "Edge case performance analysis shows limitations in extreme ranges",
+      "Requires clinical validation in diverse patient populations",
+      "Performance may vary with individual physiological differences"
+    ],
+    "contraindications": [
+      "Hypoglycemia detection sensitivity (0.87) below safety requirement (0.90)",
+      "Missed 5 severe hypoglycemic events (<54.0 mg/dL)"
+    ]
+  }
+}
